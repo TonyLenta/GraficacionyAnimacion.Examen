@@ -214,7 +214,7 @@ function collectStar (player, star)
 
 
         //Variable para agregar corazon
-        
+
         var heart = hearts.create(x, 16, 'heart');
         heart.setBounce(1);
         heart.setCollideWorldBounds(true);
@@ -235,7 +235,10 @@ function hitBomb (player, bomb)
         gameOver = true;
     }
     else {
-        //score
+
+        //Quitando puntos por perdidad de vida
+
+        
         score = score - 50;
         scoreText.setText('score: ' + score);
         //Vida
