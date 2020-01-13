@@ -251,11 +251,14 @@ function collectStar (player, star)
         level++;
         levelText.setText('level: ' + level);
 
-        //Corregir error
-        if (level % 2 == 0) {
-            //Añadir espacios
+        //Creacion de barreras
+        if (level  != 1) {
+
             for (i = 0; i < getRndInteger(1, 5); i++) {
                 platforms.create(getRndInteger(50, 600), (400 - i * 100), 'ground').setScale(0.5).refreshBody();
+                platforms.create(Math.random(), Math.random(), 'ground').refreshBody();;
+                platforms.create(Math.random(level), Math.random(), 'ground').refreshBody();;
+                platforms.create(Math.random(level), Math.random(), 'ground').refreshBody();;
             }
         }
 
@@ -276,8 +279,6 @@ function hitBomb (player, bomb)
     else {
 
         //Quitando puntos por perdidad de vida
-
-
         score = score - 50;
         scoreText.setText('score: ' + score);
         //Vida
@@ -314,6 +315,10 @@ function collectGreen(player, startgreen) {
 
 }
 
+
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 </script>
 
 </body>
