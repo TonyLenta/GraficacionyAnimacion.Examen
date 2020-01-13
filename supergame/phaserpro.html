@@ -52,11 +52,12 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('sky', 'assets/sky.png');
+    this.load.image('sky', 'assets/sky.png'); //cielo
     this.load.image('ground', 'assets/platform.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
-    this.load.image('heart', 'assets/heart.png');
+    this.load.image('star', 'assets/star.png');// estrella amarilla
+    this.load.image('startgreen', 'assets/startgreen.png');// estrella verde
+    this.load.image('bomb', 'assets/bomb.png'); // bomba
+    this.load.image('heart', 'assets/heart.png'); //corazon
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 }
 
@@ -127,7 +128,8 @@ function create ()
     bombs = this.physics.add.group();
 
 
-
+    hearts = this.physics.add.group();
+    startsgreen = this.physics.add.group();
     //  The score
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
@@ -139,13 +141,17 @@ function create ()
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(bombs, platforms);
-
-   
+    // Agregando corazon verde
+    this.physics.add.collider(hearts, platforms);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     this.physics.add.overlap(player, stars, collectStar, null, this);
 
     this.physics.add.collider(player, bombs, hitBomb, null, this);
+
+    //Corazon
+    this.physics.add.collider(player, hearts, collectHeart, null, this);
+
 }
 
 function update ()
@@ -210,13 +216,41 @@ function collectStar (player, star)
 
 function hitBomb (player, bomb)
 {
-    this.physics.pause();
+    if (life == 0) {
+        this.physics.pause();
 
-    player.setTint(0xff0000);
+        player.setTint(0xff0000);
 
-    player.anims.play('turn');
+        player.anims.play('turn');
 
-    gameOver = true;
+        gameOver = true;
+    }
+    else {
+        //score
+        score = score - 50;
+        scoreText.setText('score: ' + score);
+        //Vida
+        life = life - 1;
+        if (life < 0) {
+            lifeText.setText('life: 0');
+        }
+        else {
+            lifeText.setText('life: ' + life);
+        }
+    }
+}
+
+// agreagando corazones
+function collectHeart(player, heart) {
+    heart.disableBody(true, true);
+
+    //  Add and update the score
+
+    if (life != 3) {
+        life++;
+        lifeText.setText('life: ' + life);
+    }
+
 }
 
 </script>
