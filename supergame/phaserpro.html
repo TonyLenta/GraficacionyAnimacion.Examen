@@ -127,8 +127,9 @@ function create ()
 
     bombs = this.physics.add.group();
 
-
+    // Grupo de corazones
     hearts = this.physics.add.group();
+    //Grupo de estrellas verdes
     startsgreen = this.physics.add.group();
     //  The score
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -141,8 +142,10 @@ function create ()
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(bombs, platforms);
-    // Agregando corazon verde
+
+    // Agregando corazon  y estrellas verde
     this.physics.add.collider(hearts, platforms);
+    this.physics.add.collider(startsgreen, platforms);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     this.physics.add.overlap(player, stars, collectStar, null, this);
@@ -151,6 +154,9 @@ function create ()
 
     //Corazon
     this.physics.add.collider(player, hearts, collectHeart, null, this);
+    // Estrella verde
+    this.physics.add.collider(player, startsgreen, collectGreen, null, this);
+
 
 }
 
@@ -220,6 +226,11 @@ function collectStar (player, star)
         heart.setCollideWorldBounds(true);
         heart.setVelocity(Phaser.Math.Between(-200, 200), 20);
 
+        //Variable para agregar estrellas verdes
+        var startgreen = startsgreen.create(x, 16, 'startgreen');
+        startgreen.setBounce(1);
+        startgreen.setCollideWorldBounds(true);
+        startgreen.setVelocity(Phaser.Math.Between(-200, 200), 20);
     }
 }
 
@@ -238,7 +249,7 @@ function hitBomb (player, bomb)
 
         //Quitando puntos por perdidad de vida
 
-        
+
         score = score - 50;
         scoreText.setText('score: ' + score);
         //Vida
@@ -252,7 +263,7 @@ function hitBomb (player, bomb)
     }
 }
 
-// agreagando corazones
+    // agreagando corazones
 function collectHeart(player, heart) {
     heart.disableBody(true, true);
 
@@ -262,6 +273,16 @@ function collectHeart(player, heart) {
         life++;
         lifeText.setText('life: ' + life);
     }
+
+}
+
+    // agregando corazonez verdes
+function collectGreen(player, startgreen) {
+    startgreen.disableBody(true, true);
+
+    //Agreaga 50 puntos
+    score = score + 50;
+    scoreText.setText('score: ' + score);
 
 }
 
