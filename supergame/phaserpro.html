@@ -243,6 +243,22 @@ function collectStar (player, star)
         startgreen.setBounce(1);
         startgreen.setCollideWorldBounds(true);
         startgreen.setVelocity(Phaser.Math.Between(-200, 200), 20);
+
+
+
+
+        //Esenario para niveles
+        level++;
+        levelText.setText('level: ' + level);
+
+        //Corregir error
+        if (level % 2 == 0) {
+            //Añadir espacios
+            for (i = 0; i < getRndInteger(1, 5); i++) {
+                platforms.create(getRndInteger(50, 600), (400 - i * 100), 'ground').setScale(0.5).refreshBody();
+            }
+        }
+
     }
 }
 
