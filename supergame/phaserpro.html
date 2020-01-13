@@ -211,6 +211,15 @@ function collectStar (player, star)
         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
         bomb.allowGravity = false;
 
+
+
+        //Variable para agregar corazon
+        
+        var heart = hearts.create(x, 16, 'heart');
+        heart.setBounce(1);
+        heart.setCollideWorldBounds(true);
+        heart.setVelocity(Phaser.Math.Between(-200, 200), 20);
+
     }
 }
 
